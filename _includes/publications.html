@@ -1,0 +1,16 @@
+{% comment %}
+Render the publication records stored in _publications, newest year first.
+The same list appears in the About section and on the Publications subpage.
+{% endcomment %}
+{% assign publication_years = site.publications | map: "year" | uniq | sort | reverse %}
+{% for year in publication_years %}
+{% assign year_publications = site.publications | where: "year", year | sort: "order" %}
+<h3>{{ year }}</h3>
+{% for publication in year_publications %}
+<div class="publication-item">
+  <p><strong>{{ publication.title }}</strong></p>
+  <p>{{ publication.authors }}</p>
+  <p><em>{{ publication.venue }}</em>{% if publication.first_author %} · First author{% endif %}</p>
+</div>
+{% endfor %}
+{% endfor %}
